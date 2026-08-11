@@ -8,8 +8,8 @@ import glob
 import os
 import sys
 
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import textproto_util  # type: ignore[missing-import]
-
 
 parse_and_validate_widget = textproto_util.parse_and_validate_widget
 
@@ -17,50 +17,66 @@ parse_and_validate_widget = textproto_util.parse_and_validate_widget
 def validate_widget(
     widget: textproto_util.Widget,
     expected_promql_substring: str = "",
+    expected_lts_filter_substring: str = "",
     expected_unit_override: str = "",
     expected_plot_type: str = "",
 ) -> None:
   """Validates the Widget message structure and fields."""
-  assert widget.title, "Widget title must not be empty"
-  assert (
-      len(widget.title) <= 80
-  ), f"Widget title exceeds 80 chars: {len(widget.title)}"
+  if not widget.title:
+    raise ValueError("Widget title must not be empty")
+  if len(widget.title) > 80:
+    raise ValueError(f"Widget title exceeds 80 chars: {len(widget.title)}")
 
-  assert (
-      widget.HasField("xy_chart") and widget.xy_chart is not None
-  ), "Widget must contain an xy_chart"
+  if not (widget.HasField("xy_chart") and widget.xy_chart is not None):
+    raise ValueError("Widget must contain an xy_chart")
   xy_chart = widget.xy_chart
 
-  assert (
-      len(xy_chart.data_sets) > 0
-  ), "xy_chart must contain at least one data_set"
+  if len(xy_chart.data_sets) == 0:
+    raise ValueError("xy_chart must contain at least one data_set")
   ds = xy_chart.data_sets[0]
 
-  assert (
-      ds.time_series_query.prometheus_query
-  ), "data_set must contain prometheus_query"
+  has_promql = bool(ds.time_series_query.prometheus_query)
+  has_lts = bool(ds.time_series_query.time_series_filter)
+  if not (has_promql or has_lts):
+    raise ValueError(
+        "data_set must contain either prometheus_query or time_series_filter"
+    )
 
   if expected_promql_substring:
-    assert (
-        expected_promql_substring in ds.time_series_query.prometheus_query
-    ), (
-        "PromQL query missing expected substring"
-        f" '{expected_promql_substring}'. Got:"
-        f" {ds.time_series_query.prometheus_query}"
-    )
+    if not has_promql:
+      raise ValueError("Expected PromQL but found LTS filter")
+    if expected_promql_substring not in ds.time_series_query.prometheus_query:
+      raise ValueError(
+          "PromQL query missing expected substring"
+          f" '{expected_promql_substring}':"
+          f" {ds.time_series_query.prometheus_query}"
+      )
+
+  if expected_lts_filter_substring:
+    if not has_lts:
+      raise ValueError("Expected LTS filter but found PromQL")
+    if (
+        expected_lts_filter_substring
+        not in ds.time_series_query.time_series_filter.filter
+    ):
+      raise ValueError(
+          "LTS filter missing expected substring"
+          f" '{expected_lts_filter_substring}':"
+          f" {ds.time_series_query.time_series_filter.filter}"
+      )
 
   if expected_unit_override:
-    assert (
-        ds.time_series_query.unit_override == expected_unit_override
-    ), (
-        f"Expected unit_override '{expected_unit_override}', got"
-        f" '{ds.time_series_query.unit_override}'"
-    )
+    if ds.time_series_query.unit_override != expected_unit_override:
+      raise ValueError(
+          f"Expected unit_override '{expected_unit_override}', got"
+          f" '{ds.time_series_query.unit_override}'"
+      )
 
   if expected_plot_type:
-    assert ds.plot_type == expected_plot_type, (
-        f"Expected plot_type '{expected_plot_type}', got '{ds.plot_type}'"
-    )
+    if ds.plot_type != expected_plot_type:
+      raise ValueError(
+          f"Expected plot_type '{expected_plot_type}', got '{ds.plot_type}'"
+      )
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -80,6 +96,11 @@ def main(argv: Sequence[str] | None = None) -> int:
       "--expected_promql_substring",
       default="",
       help="Expected substring in PromQL query.",
+  )
+  parser.add_argument(
+      "--expected_lts_filter_substring",
+      default="",
+      help="Expected LTS Filter substring.",
   )
   parser.add_argument(
       "--expected_unit_override",
@@ -148,6 +169,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         validate_widget(
             widget=widget,
             expected_promql_substring=args.expected_promql_substring,
+            expected_lts_filter_substring=args.expected_lts_filter_substring,
             expected_unit_override=args.expected_unit_override,
             expected_plot_type=args.expected_plot_type,
         )
@@ -170,7 +192,6 @@ def main(argv: Sequence[str] | None = None) -> int:
   except Exception as e:  # pylint: disable=broad-except
     print(f"ERROR: Failed to validate Widget textproto: {e}", file=sys.stderr)
     return 1
-
 
 if __name__ == "__main__":
   sys.exit(main())
