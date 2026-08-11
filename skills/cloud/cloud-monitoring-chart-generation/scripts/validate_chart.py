@@ -4,8 +4,10 @@ from __future__ import annotations
 
 import argparse
 from collections.abc import Sequence
+import glob
 import os
 import sys
+
 import textproto_util  # type: ignore[missing-import]
 
 
@@ -68,8 +70,11 @@ def main(argv: Sequence[str] | None = None) -> int:
   parser.add_argument(
       "--input_file",
       "-i",
-      required=True,
-      help="Path to Widget textproto file or '-' for STDIN.",
+      default="",
+      help=(
+          "Path to Widget textproto file or '-' for STDIN. If empty, searches"
+          " all .textproto files."
+      ),
   )
   parser.add_argument(
       "--expected_promql_substring",
@@ -90,43 +95,80 @@ def main(argv: Sequence[str] | None = None) -> int:
   args = parser.parse_args(argv)
 
   try:
-    content = None
+    files_to_check = []
     if args.input_file == "-":
       if not sys.stdin.isatty():
-        content = sys.stdin.read()
-    else:
+        files_to_check.append(("-", sys.stdin.read()))
+    elif args.input_file:
       work_dir = os.environ.get("BUILD_WORKING_DIRECTORY", os.getcwd())
       input_path = args.input_file
       if not os.path.isabs(input_path):
         input_path = os.path.join(work_dir, input_path)
       if os.path.exists(input_path):
         with open(input_path, "r", encoding="utf-8") as f:
-          content = f.read()
+          files_to_check.append((input_path, f.read()))
+      else:
+        print(
+            f"ERROR: Input file '{args.input_file}' not found on disk.",
+            file=sys.stderr,
+        )
+        return 1
+    else:
 
-    if not content:
-      print(
-          f"ERROR: Input file '{args.input_file}' not found on disk.",
-          file=sys.stderr,
-      )
-      return 1
+      work_dir = os.environ.get("BUILD_WORKING_DIRECTORY", os.getcwd())
 
-    widget = textproto_util.parse_and_validate_widget(content)
-    validate_widget(
-        widget=widget,
-        expected_promql_substring=args.expected_promql_substring,
-        expected_unit_override=args.expected_unit_override,
-        expected_plot_type=args.expected_plot_type,
-    )
+      search_dirs = [work_dir]
+      # Adjust for Google3 environments where the agent may run from the CitC client root
+      # rather than the google3/ directory. This check is safely bypassed in public (GitHub)
+      # environments because the google3/ directory will not exist. Internally, the workspace
+      # contains a parent CitC directory (causing flakiness if the agent runs from there). Externally,
+      # the Git checkout is the true root, so agents won't accidentally run from a parent wrapper.
+      if not work_dir.endswith("google3") and os.path.exists(
+          os.path.join(work_dir, "google3")
+      ):
+        search_dirs.append(os.path.join(work_dir, "google3"))
+
+      for d in search_dirs:
+        for p in glob.glob(os.path.join(d, "*.textproto")):
+          with open(p, "r", encoding="utf-8") as f:
+            files_to_check.append((p, f.read()))
+
+      if not files_to_check:
+        print(
+            "ERROR: No .textproto files found in the workspace directories:"
+            f" {search_dirs}",
+            file=sys.stderr,
+        )
+        return 1
+
+    last_err = None
+    for path, content in files_to_check:
+      try:
+        widget = textproto_util.parse_and_validate_widget(content)
+        validate_widget(
+            widget=widget,
+            expected_promql_substring=args.expected_promql_substring,
+            expected_unit_override=args.expected_unit_override,
+            expected_plot_type=args.expected_plot_type,
+        )
+        print(
+            f"Successfully validated Widget textproto '{path}'. Title:"
+            f" '{widget.title}'"
+        )
+        return 0
+      except Exception as e:
+        last_err = e
+        continue
+
+    # If we tried files but none passed:
     print(
-        f"Successfully validated Widget textproto '{args.input_file}'. Title:"
-        f" '{widget.title}'"
-    )
-    return 0
-  except Exception as e:  # pylint: disable=broad-except
-    print(
-        f"ERROR: Failed to validate Widget textproto: {e}",
+        "ERROR: Failed to validate any Widget textproto finding a match. Last"
+        f" error: {last_err}",
         file=sys.stderr,
     )
+    return 1
+  except Exception as e:  # pylint: disable=broad-except
+    print(f"ERROR: Failed to validate Widget textproto: {e}", file=sys.stderr)
     return 1
 
 

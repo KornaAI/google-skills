@@ -23,21 +23,23 @@ Transforms PromQL queries and metric metadata into valid Server-Driven UI
 These generated textprotos are designed to be ingested by the Cloud Monitoring
 Dashboards API, gcloud CLI, or declarative dashboard provisioning pipelines.
 
-> [!CAUTION]
-> **CRITICAL EXECUTION & WORKING DIRECTORY RULES**:
-> - **DO NOT CHANGE WORKING DIRECTORY**: Keep your working directory at your
->   workspace root. Do NOT `cd` into skill subdirectories.
-> - **NO DISCOVERY OR SEARCH RULE**: The metric descriptor, PromQL query,
->   unit, and resource type are ALWAYS present in the conversation context.
->   **NEVER** run file or codebase search tools, such as grep, find, directory
->   listings, or codebase queries, to discover metric metadata or inspect
->   repository structures.
-> - **SCRIPT EXECUTION**: Execute the bundled Python scripts directly using
->   python3, for example: `python3 scripts/assemble_widget_proto.py ...`.
-> - **OUTPUT GENERATION**: The `assemble_widget_proto` script automatically
->   generates deterministic sequential filenames like `chart.textproto` and `chart_2.textproto`
->   and saves them to the active workspace. The script will handle naming and saving
->   automatically, and will print the generated filename to the console.
+> [!CAUTION] **CRITICAL EXECUTION & WORKING DIRECTORY RULES**:
+>
+> -   **DO NOT CHANGE WORKING DIRECTORY**: Keep your working directory at your
+>     workspace root. Do NOT `cd` into skill subdirectories.
+> -   **NO DISCOVERY OR SEARCH RULE**: The metric descriptor, PromQL query,
+>     unit, and resource type are ALWAYS present in the conversation context.
+>     **NEVER** run file or codebase search tools, like grep, find, directory
+>     listings, or codebase queries, to discover metric metadata or inspect
+>     repository structures.
+> -   **SCRIPT EXECUTION**: Execute the bundled Python scripts directly using
+>     python3.
+> -   **OUTPUT GENERATION**: The `assemble_widget_proto` script automatically
+>     generates a unique UUID-based filename to prevent parallel execution
+>     collisions. It will print the generated filename to standard error
+>     strongly prefixed with "Wrote widget textproto to:". You MUST parse this
+>     exact prefix from the logs to extract the generated path and use it for
+>     validation in Stage 4.
 
 ## Prerequisites: Environment Setup
 
@@ -47,7 +49,7 @@ Install the required dependencies in your environment or sandbox:
 pip install -r scripts/requirements.txt
 ```
 
-## 3-Stage Pipeline Workflow
+## Workflow Pipeline
 
 ```
 [ Stage 1: compute_labels ]  --->  [ Stage 2: LLM Synthesis ]  --->  [ Stage 3: assemble_widget_proto ]
@@ -73,11 +75,11 @@ candidates to formulate a 4-key `SemanticPlotSpec` JSON object:
 
 1. **`title`**: Polish `titleCandidate` to ensure it is concise, human-readable,
    and under 80 characters.
-2. **`yAxisLabel`**: Set this to a concise, human-readable quantitative
-   descriptor or metric concept, such as `"Utilization"`, `"Bytes"`, or
-   `"Bytes Rate"`. Do NOT append unit symbols or suffixes such as `"(%)"`,
-   `"(/s)"`, or `"(By)"` to the label, because units are rendered automatically
-   via `unitOverride`.
+2.  **`yAxisLabel`**: Set this to a concise, human-readable quantitative
+    descriptor or metric concept, like `"Utilization"`, `"Bytes"`, or `"Bytes
+    Rate"`. Do NOT append unit symbols or suffixes like `"(%)"`, `"(/s)"`, or
+    `"(By)"` to the label, because units are rendered automatically via
+    `unitOverride`.
 3. **`plotType`**: Default to `LINE`. Use `STACKED_AREA` if requested by the
    user or for distribution queries.
 4. **`unitOverride`**: Set this to the Unified Code for Units of Measure
@@ -85,26 +87,31 @@ candidates to formulate a 4-key `SemanticPlotSpec` JSON object:
    Override Computation Rules** below.
 
 #### Unit Override Computation Rules:
-- **Rate Functions (`rate(...)`, `irate(...)`)**: Convert cumulative counters
-  into per-second rates. Append `/s` to the raw metric unit. For example, a raw
-  metric unit of `By` with `rate(...)` results in `unitOverride: "By/s"`.
-- **Ratios & Percentages (`100 * ... / ...`)**: Ratios of identical metric
-  units multiplied by 100 represent percentages, resulting in
-  `unitOverride: "%"`.
-- **Normalizations**: Normalize `10^2.%` to `"%"`, per the Unified Code for
-  Units of Measure (UCUM) standard.
-- **Preserved Units**: For aggregation functions like `avg_over_time(...)` or
-  `sum by (...)`, retain and output the underlying metric unit without
-  modification. For example, output `"%"`, `"By"`, or `"s"` unchanged.
 
-- **Legend Template**: Do NOT configure the `legend_template` field. It is
-  intentionally omitted so that the Cloud Monitoring frontend dynamically
-  renders its multi-column table legend at runtime.
+-   **Rate Functions (`rate(...)`, `irate(...)`)**: Convert cumulative counters
+    into per-second rates. Append `/s` to the raw metric unit. For example, a raw
+    metric unit of `By` with `rate(...)` results in `unitOverride: "By/s"`.
+
+-   **Ratios & Percentages (`100 * ... / ...`)**: Ratios of identical metric
+    units multiplied by 100 represent percentages, resulting in
+    `unitOverride: "%"`.
+
+-   **Normalizations**: Normalize `10^2.%` to `"%"`, per the Unified Code for
+    Units of Measure (UCUM) standard.
+
+-   **Preserved Units**: For aggregation functions like `avg_over_time(...)` or
+    `sum by (...)`, retain and output the underlying metric unit without
+    modification. For example, output `"%"`, `"By"`, or `"s"` unchanged.
+
+-   **Legend Template**: Do NOT configure the `legend_template` field. It is
+    intentionally omitted so that the Cloud Monitoring frontend dynamically
+    renders its multi-column table legend at runtime.
 
 Example `SemanticPlotSpec`:
+
 ```json
 {
-  "title": "VM CPU Utilization (us-central1-a)",
+  "title": "VM CPU Utilization us-central1-a",
   "yAxisLabel": "Utilization",
   "plotType": "LINE",
   "unitOverride": "%"
@@ -121,12 +128,17 @@ python3 scripts/assemble_widget_proto.py \
   --spec_json 'SEMANTIC_PLOT_SPEC_JSON'
 ```
 
-> [!IMPORTANT]
-> **MANDATORY FILE OUTPUT CONTRACT**:
-> The script automatically names and saves output files like `chart.textproto` and `chart_2.textproto` directly in your workspace root without subdirectories.
+> [!IMPORTANT] **MANDATORY FILE OUTPUT CONTRACT**: Do not attempt to guess or
+> enforce the output filename. The script will automatically generate a
+> guaranteed-unique filename and print it to standard error. Search stderr for
+> the explicit prefix "Wrote widget textproto to:" to deterministically capture
+> this filename, and then target it in Stage 4 validation.
 
-- **Assigned Filename Feedback**: Whenever an output file is saved, the script logs the file path to stderr, for example: `Wrote widget textproto to: .../chart.textproto`. Read your command execution logs for the exact filename created so you can target it in Stage 4 validation.
-- **Text Chat Output**: Enclose the generated SDUI widget textproto inside a ```` ```textproto ```` code block in your response:
+-   **Assigned Filename Feedback**: Whenever an output file is saved, the script
+    logs the file path to stderr. Read your command execution logs for the exact
+    filename created so you can target it in Stage 4 validation.
+-   **Text Chat Output**: Enclose the generated SDUI widget textproto inside
+    a ```` ```textproto```` code block in your response:
 
 ```textproto
 title: "..."
@@ -135,37 +147,40 @@ xy_chart {
 }
 ```
 
-### Stage 4: Mandatory Self-Verification & Auto-Retry Loop
+### Mandatory Self-Verification & Auto-Retry Loop
 
-> [!CAUTION]
-> **DO NOT FINISH YOUR TURN UNTIL FILE VERIFICATION PASSES**:
-> 1. **Run Validation Check**: Execute the validator script against the
->    generated file, such as `chart.textproto` or the sequential filename like
->    `chart_2.textproto` output from Stage 3:
->    ```bash
+> [!CAUTION] **DO NOT FINISH YOUR TURN UNTIL FILE VERIFICATION PASSES**: 1.
+> **Validate Artifact**: Execute the validator script against the generated file
+> output from Stage 3:
+>
+> ```bash
 >    python3 scripts/validate_chart.py --input_file "GENERATED_FILE.textproto"
->    ```
-> 2. **Auto-Retry if Missing or Failed**: If `validate_chart` reports that the
->    file is missing or invalid, verify your script parameters and immediately re-run Stage 3:
->    ```bash
->    python3 scripts/assemble_widget_proto.py \
->      --promql_query "PROMQL_QUERY" \
->      --spec_json 'SEMANTIC_PLOT_SPEC_JSON'
->    ```
+> ```
+>
+> 2.  **Auto-Retry if Missing or Failed**: If `validate_chart` reports that the
+>     file is missing or invalid, verify your script parameters and immediately
+>     re-run Stage 3:
+>
+>     ```bash
+>     python3 scripts/assemble_widget_proto.py \
+>       --promql_query "PROMQL_QUERY" \
+>       --spec_json 'SEMANTIC_PLOT_SPEC_JSON'
+>     ```
 > 3. **Validation & Retries**: Run `validate_chart` to verify the generated
 >    textproto. If validation fails due to a schema or syntax error, correct
 >    the parameters and retry up to 2 times. If validation still fails after 2
 >    retries, stop retrying, notify the user of the validation error, and
 >    present the best-effort textproto.
-> 4. **Execution vs. Validation Errors**: Note that schema/syntax validation
->    errors from `validate_chart.py` are distinct from OS or environment
->    execution restrictions, such as `Permission denied` or `Command not found`,
->    which are handled below in **Graceful Sandbox Fallback**.
+> 4.  **Execution vs. Validation Errors**: Note that schema/syntax validation
+>     errors from `validate_chart.py` are distinct from OS or environment
+>     execution restrictions, which are handled below in **Graceful Sandbox
+>     Fallback**.
 
 #### Graceful Sandbox Fallback
 If `compute_labels.py`, `assemble_widget_proto.py`, or `validate_chart.py`
 cannot be executed due to environment or sandbox restrictions, do the
 following:
+
 1. Notify the user which script cannot be executed and why.
 2. **Synthesize and output the complete widget textproto directly in your
    response**, following all formatting and unit rules.

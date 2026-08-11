@@ -4,6 +4,7 @@ import argparse
 import json
 import os
 import sys
+import uuid
 
 
 def format_proto_string(val: str) -> str:
@@ -68,7 +69,7 @@ def assemble_widget_textproto(
 
 
 def get_auto_output_path(work_dir: str) -> str:
-  """Automatically assigns deterministic sequential filenames (chart.textproto, chart_2.textproto)."""
+  """Safely generates a random, parallel-robust filename to avoid race conditions."""
   # Adjust for Google3 environments where the agent may run from the CitC client root
   # rather than the google3/ directory. This check is safely bypassed in public (GitHub)
   # environments because the google3/ directory will not exist. Internally, the workspace
@@ -77,13 +78,12 @@ def get_auto_output_path(work_dir: str) -> str:
   if not work_dir.endswith("google3") and os.path.basename(work_dir) != "google3":
     if os.path.exists(os.path.join(work_dir, "google3")):
       work_dir = os.path.join(work_dir, "google3")
-  idx = 1
+
   while True:
-    filename = "chart.textproto" if idx == 1 else f"chart_{idx}.textproto"
-    candidate = os.path.join(work_dir, filename)
+    random_id = uuid.uuid4().hex[:8]
+    candidate = os.path.join(work_dir, f"chart_{random_id}.textproto")
     if not os.path.exists(candidate):
       return candidate
-    idx += 1
 
 
 def main() -> None:
