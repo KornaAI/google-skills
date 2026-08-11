@@ -3,9 +3,10 @@
 The Google IMA SDK for tvOS is highly consistent with the iOS SDK, sharing the
 same API and integration flow.
 
-**Before proceeding, you must read the [Google IMA SDK iOS Integration Guide](references/ima-sdk-ios-guide.md)
-for the complete step-by-step lifecycle flow (Initialization -> Ad Request -> Ad
-Load -> Playback -> Cleanup).**
+**Before proceeding, you must read the
+[Google IMA SDK iOS Integration Guide](ima-sdk-ios-guide.md) for the complete
+step-by-step lifecycle flow (Initialization -> Ad Request -> Ad Load -> Playback
+-> Cleanup).**
 
 This document outlines the critical differences and tvOS-specific requirements
 you must implement.
@@ -54,9 +55,9 @@ fast-forwarding through an ad):
 
 ## Code implementation differences
 
-Refer to the [iOS Guide](references/ima-sdk-ios-guide.md) for the main
-`AdsManager` and `PlayerViewController` implementation. Adjust the tvOS
-implementation as follows:
+Refer to the [iOS Guide](ima-sdk-ios-guide.md) for the main `AdsManager` and
+`PlayerViewController` implementation. Adjust the tvOS implementation as
+follows:
 
 ### Ad UI setup (safe area)
 
