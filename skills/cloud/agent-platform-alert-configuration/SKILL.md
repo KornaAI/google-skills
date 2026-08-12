@@ -34,9 +34,9 @@ you MUST adhere to the following safety tiers based on the action requested:
         additional billing charges and create cloud resources. The agent MUST
         ALWAYS warn the user explicitly about the potential extra billing costs
         of BOTH the Online Monitor (specifically mentioning **LLM evaluations**)
-        and Telemetry (specifically mentioning **Cloud Trace/Logging export**).
-        You MUST STOP and ask for explicit approval before proceeding with
-        provisioning or providing setup commands.
+        and Telemetry (specifically mentioning **Cloud Trace/Cloud Logging
+        export**). You MUST STOP and ask for explicit approval before proceeding
+        with provisioning or providing setup commands.
 
 ### 2. Prerequisites & Dependencies
 
@@ -121,8 +121,10 @@ pip install -r scripts/requirements.txt
         1.  **Latency** (anomaly monitoring)
         2.  **Error Rate - Fast Burn SLO** (1-Hour Window)
         3.  **Error Rate - Slow Burn SLO** (3-Day Window)
-        4.  **Model Call Error Rate** (SQL-based Log Analytics Alerting)
-        5.  **Tool Call Error Rate** (SQL-based Log Analytics Alerting)
+        4.  **Model Call Error Rate** (SQL-based Observability Analytics
+            Alerting)
+        5.  **Tool Call Error Rate** (SQL-based Observability Analytics
+            Alerting)
     *   **For Quality Monitoring**: You MUST configure exactly three alerting
         policies (Requires Vertex AI Online Monitors):
         1.  **Final Response Quality**
@@ -133,12 +135,12 @@ pip install -r scripts/requirements.txt
         1.  **Rapid Token Burn Rate** (anomaly monitoring)
     *   **For Safety Monitoring**: You MUST configure exactly one safety
         alerting policy:
-        1.  **High Model Armor Safety Policy Trigger Rate** (SQL-based Log
-            Analytics Alerting)
+        1.  **High Model Armor Safety Policy Trigger Rate** (SQL-based
+            Observability Analytics Alerting)
     *   **For Security Monitoring**: You MUST configure exactly one security
         alerting policy:
-        1.  **High IAM Permission Denied Trigger Rate** (SQL-based Log Analytics
-            Alerting)
+        1.  **High IAM Permission Denied Trigger Rate** (SQL-based Observability
+            Analytics Alerting)
 *   **Terraform Only**: Write the generated observability configuration ONLY as
     Terraform (`.tf`) files (e.g., `alerts.tf`, `variables.tf`).
     -   You **ONLY** need to install Terraform if you're asked to deploy the

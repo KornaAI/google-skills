@@ -118,8 +118,8 @@ the instructions corresponding to the availability of historical metrics data:
 
 All raw telemetry metrics for the Agent Platform container runtime are
 cumulative **counters** monitored via PromQL. Downstream model calls are tracked
-via Open Telemetry Trace Spans exported to Log Analytics and monitored via SQL
-queries.
+via Open Telemetry Trace Spans exported to Observability Analytics and monitored
+via SQL queries.
 
 Signal                    | Source / Raw Metric                                                                                      | Type        | Description
 :------------------------ | :------------------------------------------------------------------------------------------------------- | :---------- | :----------
@@ -381,7 +381,7 @@ Where:
 
 When configuring a SQL-based alerting condition (`condition_sql`) in Google
 Cloud Monitoring for an agent, use the following template to query trace spans
-exported to Log Analytics:
+exported to Observability Analytics:
 
 ```sql
 SELECT
@@ -454,7 +454,7 @@ Where:
 
 When configuring a SQL-based alerting condition (`condition_sql`) in Google
 Cloud Monitoring for an agent to monitor tool call error rates, use the
-following template to query trace spans exported to Log Analytics:
+following template to query trace spans exported to Observability Analytics:
 
 ```sql
 SELECT

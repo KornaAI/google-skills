@@ -7,7 +7,7 @@ the following environment variables:
 
 Environment Variable                                 | Required Value                                   | Description
 ---------------------------------------------------- | ------------------------------------------------ | -----------
-`GOOGLE_CLOUD_AGENT_ENGINE_ENABLE_TELEMETRY`         | `"true"`                                         | Enables tracing and logging export.
+`GOOGLE_CLOUD_AGENT_ENGINE_ENABLE_TELEMETRY`         | `"true"`                                         | Enables tracing and Cloud Logging export.
 `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT` | `"EVENT_ONLY"` or `"SPAN_AND_EVENT"` or `"true"` | Captures message payloads for evaluation.
 `OTEL_SEMCONV_STABILITY_OPT_IN`                      | `"gen_ai_latest_experimental"`                   | Opts into Gen AI semantic conventions.
 
@@ -16,7 +16,7 @@ Environment Variable                                 | Required Value           
 Update the `google_vertex_ai_reasoning_engine` resource's `deployment_spec.env`
 blocks:
 
-```hcl
+```terraform
 resource "google_vertex_ai_reasoning_engine" "my_agent" {
   ...
   spec {
