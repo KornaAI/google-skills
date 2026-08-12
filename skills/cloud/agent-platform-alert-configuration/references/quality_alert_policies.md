@@ -46,8 +46,8 @@ provisioned for the agent and telemetry is enabled:
 #### Verify Telemetry Status
 
 Before generating any alerting policies, proposing a plan, or provisioning
-Online Monitors, you MUST always check if the agent is ready to export traces by
-running the telemetry checking script:
+Online Monitors, you MUST always verify if the agent is ready to export traces
+by running the telemetry checking script:
 
 *   **Mandatory Command**: `python3 scripts/check_telemetry.py --project-id
     "{project_id}" --agent-resource-name "{agent_resource_name}"`
@@ -81,7 +81,7 @@ If execution fails (e.g. due to sandbox restrictions or permissions), you MUST
 provide a clear, actionable plan for the user to follow as a next step. Your
 response MUST explicitly include a section containing the exact python execution
 command with all parameter values (such as project ID, region, and agent
-resource name) fully populated. Do not merely state that the user should run it.
+resource name) fully populated. Do not merely state that the user must run it.
 
 You MUST format the plan exactly as follows:
 

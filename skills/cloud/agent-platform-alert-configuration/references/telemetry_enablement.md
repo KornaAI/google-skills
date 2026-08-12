@@ -42,7 +42,7 @@ resource "google_vertex_ai_reasoning_engine" "my_agent" {
 
 Even if telemetry environment variables are configured on the agent, verify
 these additional dependencies. Note that quality metrics will NOT populate, and
-quality metrics alert policies and the Online Monitor should be skipped if the
+quality metrics alert policies and the Online Monitor MUST be skipped if the
 decision is to NOT enable the required APIs:
 
 1.  **API Enablement**: Ensure the following APIs are enabled in the GCP
@@ -53,7 +53,7 @@ decision is to NOT enable the required APIs:
     *   **Observability API**: `observability.googleapis.com` (needed for trace
         storage and SQL queries by the evaluator)
 
-    *To check if they are enabled:*
+    *To verify if they are enabled:*
 
     ```bash
     gcloud services list --enabled --project="{project_id}" \

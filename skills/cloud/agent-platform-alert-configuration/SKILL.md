@@ -72,18 +72,18 @@ pip install -r scripts/requirements.txt
     generating or writing ANY configuration, you MUST execute these steps in
     order:
     1.  **Step 1: Streamlined Discovery (Mandatory)**: Run
-        `gather_agent_info.py` to automatically identify agent runtime, check
+        `gather_agent_info.py` to automatically identify agent runtime, verify
         telemetry, metric scopes, linked datasets, and more. This script covers
-        most of the manual checks listed in subsequent steps.
+        most of the manual verifications listed in subsequent steps.
         *   Command: `python3 scripts/gather_agent_info.py --project-id
             {project_id} --agent-name {agent_name}`
         *   **Note**: If this script **fails**, returns **partial data**, or
             doesn't produce everything you need, you MUST satisfy requirements
             by running the manual fallback steps listed in Step 2 and then
             perform Step 3 below. If Step 1 succeeds and provides all info,
-            **SKIP** to Step 3 (Pre-existing Policies Check).
-    2.  **Step 2: Metric Scope Check (Fallback)**: Run this ONLY if Step 1
-        failed to determine the metric scope.
+            **SKIP** to Step 3 (Pre-existing Policies Verification).
+    2.  **Step 2: Metric Scope Verification (Fallback)**: Run this ONLY if Step
+        1 failed to determine the metric scope.
         *   **Action A (CLI)**: Run `gcloud beta monitoring metrics-scopes list
             projects/{project_id}`. If a scoping project is returned, you MUST
             deploy policies there.
@@ -93,15 +93,15 @@ pip install -r scripts/requirements.txt
         *   **Action C (Fallback)**: If ambiguous, ASK the user: "Are you using
             a multi-project Cloud Monitoring Metric Scope? If so, what is the
             scoping project ID?"
-    3.  **Step 3: Pre-existing Policies Check**: Avoid duplicates.
+    3.  **Step 3: Pre-existing Policies Verification**: Avoid duplicates.
         *   **Action**: Scan the target directory to see if aggregated policies
             already exist targeting the same metrics (grouped by
             `reasoning_engine_id` or `gen_ai_agent_name`). Use
             `scan_duplicates.py` to verify.
 2.  **Alert Policy Type Resource Files**: You MUST list and read files under
     `references/` with names ending in `_alert_policies.md` to learn how to
-    configure alert policies based on type. By default you should configure all
-    of the following alert types UNLESS the user requests to generate explicit
+    configure alert policies based on type. By default you MUST configure all of
+    the following alert types UNLESS the user requests to generate explicit
     alert policies and/or types. Follow their tables of content to help you find
     the reference sections you need to read:
 
@@ -223,7 +223,7 @@ pip install -r scripts/requirements.txt
 
 ### 6. Output Verification
 
-*   **Background Task Cleanup**: You MUST check the status of all background
+*   **Background Task Cleanup**: You MUST verify the status of all background
     tasks that you spawn. Before completing your execution and returning your
     final response, you MUST terminate or kill any active or hanging background
     tasks (using the `manage_task` tool with action `kill`).
@@ -238,11 +238,11 @@ resolve duplicates, and validate configs:
 
 1.  **Agent Information Gathering**: Streamlines discovery, environment auditing
     (Metric Scopes, BQ Datasets, Notification Channels), table derivations (Log
-    & Trace), and Online Evaluator checks.
+    & Trace), and Online Evaluator verifications.
     *   Command: `python3 scripts/gather_agent_info.py --project-id {project_id}
         --agent-name {agent_name}`
-2.  **Duplicate Check & Merge**: Checks for pre-existing alerts in the target
-    folder to ensure changes are merged in-place rather than appended:
+2.  **Duplicate Verification & Merge**: Verifies pre-existing alerts in the
+    target folder to ensure changes are merged in-place rather than appended:
     *   Command: `python3 scripts/scan_duplicates.py {target_tf_dir}
         --engine-var '${var.gen_ai_agent_name}'`
 3.  **Config Linting**: Validates PromQL grammar, matching engine labels, and

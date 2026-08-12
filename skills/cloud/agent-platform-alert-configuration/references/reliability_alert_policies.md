@@ -560,12 +560,12 @@ Where:
     for strict SLA enforcement.
 *   **Seasonal Decomposition Double Alerting**: The agent MUST ONLY configure
     seasonal decomposition alert policies to track spikes (e.g., latency spikes)
-    OR drops AND MUST NOT use dual-direction checks (like absolute deviation).
-    Explain this limitation to the user: comparing to a historical offset (e.g.,
-    `offset 1w`) the alert policy triggers twice if tracking both directions
-    (once for the anomaly, and once 1 week later when the anomaly becomes the
-    baseline). To prevent this, the generated policy MUST only track either
-    spikes (using `>`) or drops (using `<`), avoiding using `abs()`.
+    OR drops AND MUST NOT use dual-direction evaluations (like absolute
+    deviation). Explain this limitation to the user: comparing to a historical
+    offset (e.g., `offset 1w`) the alert policy triggers twice if tracking both
+    directions (once for the anomaly, and once 1 week later when the anomaly
+    becomes the baseline). To prevent this, the generated policy MUST only track
+    either spikes (using `>`) or drops (using `<`), avoiding using `abs()`.
 *   **Script Failures**: If `list_trace_scope_table_names.py` fails
     unexpectedly, verify the project ID and ensure you have permissions to view
     trace scopes and linked datasets.
