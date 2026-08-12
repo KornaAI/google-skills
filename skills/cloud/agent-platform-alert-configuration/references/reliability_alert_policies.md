@@ -536,9 +536,11 @@ Where:
     3.  **Aggregate failures**: Group by agent or tool name, the ratio of failed
         requests (status code `2` indicating ERROR) to total requests.
     4.  **Use `HAVING` clause** to filter out healthy tools/models.
-    5.  **Pinning (Optional)**: Use `ENDS_WITH(JSON_VALUE(resource.attributes,
-        '$."cloud.resource_id"'), 'AGENT_IDENTIFIER')` with string identifier
-        (e.g., `'support-bot'`), not numeric, unless instructed.
+    5.  **Pinning (Only if explicitly requested)**: Use
+        `ENDS_WITH(JSON_VALUE(resource.attributes, '$."cloud.resource_id"'),
+        'AGENT_IDENTIFIER')` with string identifier (e.g., `'support-bot'`), not
+        numeric, unless instructed. This should be avoided by default in favor
+        of dynamic grouping as described in the main skill instructions.
 *   **Duration Buffers (Transient Glitches)**: To avoid alerts firing on
     transient spikes, use duration/retest window buffers appropriately:
     *   **Reliability Metrics (PromQL / Cloud Monitoring)**:

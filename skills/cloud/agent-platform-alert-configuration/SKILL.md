@@ -4,8 +4,11 @@ metadata:
   category: AiAndMachineLearning
 description: >-
   Configures best-practice alerting policies for AI agents using OpenTelemetry
-  (OTel) metrics. Use when analyzing, writing, or deploying alerting policies
+  (OTel) metrics, generating output as Terraform (.tf) configuration files.
+  Use when analyzing, writing, or deploying alerting policies
   to monitor agent latency, error rates, token usage, and quality metrics.
+  Don't use for standard infrastructure monitoring unrelated to AI agents,
+  or when the agent is not instrumented with OpenTelemetry (for Reliability, Cost, Safety, Security alerts).
   NOTE: Reliability, Cost, Safety, and Security alerts use generic OTel metrics
   and work across runtimes (e.g., Cloud Run, Vertex AI). Quality alerts rely
   on Vertex AI Online Monitors and are strictly bound to Vertex AI deployments.
@@ -152,6 +155,19 @@ pip install -r scripts/requirements.txt
     a specific agent name or ID in the request does NOT constitute an explicit
     request to pin/filter; you MUST still default to dynamic grouping to cover
     all agents. To cover all active agents in the project dynamically:
+
+    *Good Example (PromQL Grouping):*
+
+    ```promql
+    sum(rate(workload_googleapis_com:gen_ai_invoke_agent_duration_count{monitored_resource="generic_node"}[5m])) by (gen_ai_agent_name)
+    ```
+
+    *Bad Example (PromQL Hardcoded Filter):*
+
+    ```promql
+    sum(rate(workload_googleapis_com:gen_ai_invoke_agent_duration_count{monitored_resource="generic_node", gen_ai_agent_name="support-bot"}[5m]))
+    ```
+
     *   **For Reliability Metrics using PromQL**: ALWAYS use grouping
         aggregations. Group by `gen_ai_agent_name` (e.g., `by
         (gen_ai_agent_name)`). Avoid filtering to a single ID/Name unless
@@ -162,6 +178,25 @@ pip install -r scripts/requirements.txt
         (`aiplatform.googleapis.com/OnlineEvaluator`) and metric type
         (`aiplatform.googleapis.com/online_evaluator/scores`) globally for the
         project.
+
+    *Good Example (SQL Grouping):*
+
+    ```sql
+    SELECT
+      JSON_VALUE(resource.attributes, '$."cloud.resource_id"') as agent_id,
+      ...
+    FROM ...
+    GROUP BY agent_id
+    ```
+
+    *Bad Example (SQL Hardcoded Filter):*
+
+    ```sql
+    SELECT ...
+    FROM ...
+    WHERE JSON_VALUE(resource.attributes, '$."cloud.resource_id"') = 'support-bot'
+    ```
+
     *   **For Downstream Calls using SQL**: Omit the `ENDS_WITH` filter
         targeting a specific agent name. Instead, extract the agent identifier
         (e.g., `JSON_VALUE(resource.attributes, '$."cloud.resource_id"')`) and
