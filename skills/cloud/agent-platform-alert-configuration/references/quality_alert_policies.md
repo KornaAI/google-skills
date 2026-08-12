@@ -35,7 +35,7 @@ provisioned for the agent and telemetry is enabled:
 -   [ ] **Ask for Approval**: Both Online Monitors and Telemetry incur separate
     billing charges. Before provisioning them, you MUST warn the user about
     these extra costs. If not pre-approved in the prompt, you MUST ask a direct
-    question in your response requesting confirmation/approval to proceed (e.g.,
+    question in your response requesting confirmation/approval to proceed (for example,
     "Please confirm if you approve the extra billing costs for the Online
     Monitor and Telemetry to proceed.").
 -   [ ] **Verify Telemetry First**: Before generating any alerting policy plan
@@ -54,10 +54,10 @@ by running the telemetry checking script:
     *   **Note on Parameters**: The `{agent_resource_name}` parameter MUST be
         the full resource path format
         `projects/<project_id>/locations/<location>/reasoningEngines/<agent_id>`
-        (e.g. `projects/gcp-prod/locations/us-central1/reasoningEngines/556677`)
+        (for example, `projects/gcp-prod/locations/us-central1/reasoningEngines/556677`)
         and not just the agent ID itself.
     *   **Dependency Failures**: If package imports or dependency installation
-        fails, try your best to resolve the issues (e.g., by verifying package
+        fails, try your best to resolve the issues (for example, by verifying package
         installation) and run the script again with the specific project-id and
         agent-resource-name parameters. If you cannot run the script
         successfully due to missing dependencies, you MUST still attempt to run
@@ -77,7 +77,7 @@ instructions in the `Tooling & Scripts` section to run the
 
 #### Formatting the Execution Plan
 
-If execution fails (e.g. due to sandbox restrictions or permissions), you MUST
+If execution fails (for example, due to sandbox restrictions or permissions), you MUST
 provide a clear, actionable plan for the user to follow as a next step. Your
 response MUST explicitly include a section containing the exact python execution
 command with all parameter values (such as project ID, region, and agent

@@ -10,7 +10,7 @@ description: >-
   Don't use for standard infrastructure monitoring unrelated to AI agents,
   or when the agent is not instrumented with OpenTelemetry (for Reliability, Cost, Safety, Security alerts).
   NOTE: Reliability, Cost, Safety, and Security alerts use generic OTel metrics
-  and work across runtimes (e.g., Cloud Run, Vertex AI). Quality alerts rely
+  and work across runtimes (such as Cloud Run, Vertex AI). Quality alerts rely
   on Vertex AI Online Monitors and are strictly bound to Vertex AI deployments.
 allowed-tools: terraform gcloud python
 ---
@@ -142,7 +142,7 @@ pip install -r scripts/requirements.txt
         1.  **High IAM Permission Denied Trigger Rate** (SQL-based Observability
             Analytics Alerting)
 *   **Terraform Only**: Write the generated observability configuration ONLY as
-    Terraform (`.tf`) files (e.g., `alerts.tf`, `variables.tf`).
+    Terraform (`.tf`) files (such as `alerts.tf`, `variables.tf`).
     -   You **ONLY** need to install Terraform if you're asked to deploy the
         alerts AND there is no valid Terraform install. SQL-based alerting using
         `condition_sql` requires the provider version **>= 6.0.0** (or late 5.x
@@ -150,10 +150,10 @@ pip install -r scripts/requirements.txt
     -   If you are **NOT** asked to deploy the alerts you do not need to install
         terraform.
 *   **Dynamic Multi-Resource Alerting (No Single-Resource Pinning)**: You MUST
-    NOT hardcode specific agent IDs or resource name filters (e.g.,
+    NOT hardcode specific agent IDs or resource name filters (for example,
     `{gen_ai_agent_name="{agent_name}"}` or
     `metric.labels.agent_resource_name="{agent_name}"`) in alerting conditions
-    unless explicitly requested (e.g., "ONLY for this agent"). Merely mentioning
+    unless explicitly requested (for example, "ONLY for this agent"). Merely mentioning
     a specific agent name or ID in the request does NOT constitute an explicit
     request to pin/filter; you MUST still default to dynamic grouping to cover
     all agents. To cover all active agents in the project dynamically:
@@ -171,7 +171,7 @@ pip install -r scripts/requirements.txt
     ```
 
     *   **For Reliability Metrics using PromQL**: ALWAYS use grouping
-        aggregations. Group by `gen_ai_agent_name` (e.g., `by
+        aggregations. Group by `gen_ai_agent_name` (for example, `by
         (gen_ai_agent_name)`). Avoid filtering to a single ID/Name unless
         requested.
     *   **For Quality Metrics using Standard Threshold Filters**: Omit the
@@ -201,11 +201,11 @@ pip install -r scripts/requirements.txt
 
     *   **For Downstream Calls using SQL**: Omit the `ENDS_WITH` filter
         targeting a specific agent name. Instead, extract the agent identifier
-        (e.g., `JSON_VALUE(resource.attributes, '$."cloud.resource_id"')`) and
+        (for example, `JSON_VALUE(resource.attributes, '$."cloud.resource_id"')`) and
         add it to the `GROUP BY` clause alongside the model or tool name.
 *   **Directory Inference**: Prefer the path explicitly provided by the user (if
     any). Otherwise, deploy configuration files to target Terraform or SRE
-    folders (e.g. `monitoring/`, `ops/`, `sre/`). Use tools to locate where
+    folders (such as `monitoring/`, `ops/`, `sre/`). Use tools to locate where
     alert policies or state pointers exist in the project, rather than blindly
     writing to the root.
 *   **Notification Channels**: By default, never configure any notification
@@ -264,7 +264,7 @@ resolve duplicates, and validate configs:
     metric threshold policy end-to-end, do NOT attempt to force real platform
     errors. Instead, deploy the alert policy with standard safe bounds (Z-score
     multiplier > 15), then temporarily update standard deviation Z-score limits
-    to a negative value (e.g. > -3) to trigger/verify the "Firing" state before
+    to a negative value (for example, > -3) to trigger/verify the "Firing" state before
     reverting. Always get confirmation before taking this action proactively.
 *   **Expected Script Failures**:
     *   `scan_duplicates.py` exiting with code 1: Parse the JSON

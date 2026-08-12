@@ -83,10 +83,10 @@ data classes:
 To resolve the workload traffic pattern (Seasonal, Steady, or Bursty), follow
 the instructions corresponding to the availability of historical metrics data:
 
-*   **Case 1: No historical metrics data available (e.g., brand new agent)**:
+*   **Case 1: No historical metrics data available (for example, brand new agent)**:
     You MUST read and follow:
     [no_historical_traffic_data.md](no_historical_traffic_data.md)
-*   **Case 2: Historical metrics data available (e.g., active agent with
+*   **Case 2: Historical metrics data available (for example, active agent with
     traffic)**: You MUST read and follow:
     [has_historical_traffic_data.md](has_historical_traffic_data.md)
 
@@ -111,7 +111,7 @@ the instructions corresponding to the availability of historical metrics data:
     downstream degradation or quota exhausting before it affects user
     experience.
 *   **For Metrics using PromQL**: ALWAYS use grouping aggregations. Group by
-    `gen_ai_agent_name` (e.g., `by (gen_ai_agent_name)`). Avoid filtering to a
+    `gen_ai_agent_name` (for example, `by (gen_ai_agent_name)`). Avoid filtering to a
     single ID/Name unless requested. Metrics are emitted via OpenTelemetry.
 
 ### Telemetry Metrics
@@ -538,17 +538,17 @@ Where:
     4.  **Use `HAVING` clause** to filter out healthy tools/models.
     5.  **Pinning (Only if explicitly requested)**: Use
         `ENDS_WITH(JSON_VALUE(resource.attributes, '$."cloud.resource_id"'),
-        'AGENT_IDENTIFIER')` with string identifier (e.g., `'support-bot'`), not
+        'AGENT_IDENTIFIER')` with string identifier (for example, `'support-bot'`), not
         numeric, unless instructed. This should be avoided by default in favor
         of dynamic grouping as described in the main skill instructions.
 *   **Duration Buffers (Transient Glitches)**: To avoid alerts firing on
     transient spikes, use duration/retest window buffers appropriately:
     *   **Reliability Metrics (PromQL / Cloud Monitoring)**:
-        *   For short-lookback alerts querying data under 25 hours (e.g.,
+        *   For short-lookback alerts querying data under 25 hours (such as
             Short-Window Z-Score, Moving Averages, Fast Burn SLO), ALWAYS use a
             `duration = "300s"` (5 minutes) buffer to filter out transient cold
             start/deployment spikes.
-        *   For long-lookback alerts querying data longer than 25 hours (e.g.,
+        *   For long-lookback alerts querying data longer than 25 hours (such as
             Long-Window Z-Score, Seasonal Decomposition, Slow Burn SLO),
             duration/retest windows are disabled by the platform. You must **not
             set a duration** (omit it entirely).
@@ -559,13 +559,13 @@ Where:
     persistent slow errors. Recommend a hard static threshold alert in parallel
     for strict SLA enforcement.
 *   **Seasonal Decomposition Double Alerting**: The agent MUST ONLY configure
-    seasonal decomposition alert policies to track spikes (e.g., latency spikes)
-    OR drops AND MUST NOT use dual-direction evaluations (like absolute
-    deviation). Explain this limitation to the user: comparing to a historical
-    offset (e.g., `offset 1w`) the alert policy triggers twice if tracking both
-    directions (once for the anomaly, and once 1 week later when the anomaly
-    becomes the baseline). To prevent this, the generated policy MUST only track
-    either spikes (using `>`) or drops (using `<`), avoiding using `abs()`.
+    seasonal decomposition alert policies to track spikes (for example, latency spikes)
+    OR drops AND MUST NOT use dual-direction evaluations (like absolute deviation).
+    Explain this limitation to the user: comparing to a historical offset (for example,
+    `offset 1w`) the alert policy triggers twice if tracking both directions
+    (once for the anomaly, and once 1 week later when the anomaly becomes the
+    baseline). To prevent this, the generated policy MUST only track either
+    spikes (using `>`) or drops (using `<`), avoiding using `abs()`.
 *   **Script Failures**: If `list_trace_scope_table_names.py` fails
     unexpectedly, verify the project ID and ensure you have permissions to view
     trace scopes and linked datasets.
