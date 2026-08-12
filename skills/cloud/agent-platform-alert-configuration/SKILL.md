@@ -300,5 +300,5 @@ resolve duplicates, and validate configs:
 
 *   [Continuous evaluation with online monitors](https://docs.cloud.google.com/gemini-enterprise-agent-platform/optimize/evaluation/evaluate-online)
 *   [Agent Platform Quality Metrics](https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/rubric-metric-details)
-*   [Google Cloud Alerting Policies Guide](https://cloud.google.com/monitoring/alerts)
-*   [Google Cloud Monitoring PromQL Documentation](https://cloud.google.com/monitoring/promql)
+*   [Google Cloud Alerting Policies Guide](https://docs.cloud.google.com/monitoring/alerts)
+*   [Google Cloud Monitoring PromQL Documentation](https://docs.cloud.google.com/monitoring/promql)
