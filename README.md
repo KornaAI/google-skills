@@ -99,6 +99,7 @@ repo to install.
   - [**Google Agents CLI Onboarding**](./skills/cloud/google-agents-cli-onboarding)
 - **Management tools**
   - [**Cloud Monitoring Chart Generation Skill (`cloud-monitoring-chart-generation`)**](./skills/cloud/cloud-monitoring-chart-generation)
+  - [**Cloud Monitoring ListTimeSeries Request Generator**](./skills/cloud/cloud-monitoring-list-time-series-request)
   - [**Configuring Cloud Logging**](./skills/cloud/cloud-logging-configuration-basics)
   - [**Configuring Cross-Project Logging**](./skills/cloud/cloud-logging-cross-project-configuration)
   - [**Generate Logging Query Language queries**](./skills/cloud/cloud-logging-query-generation)
