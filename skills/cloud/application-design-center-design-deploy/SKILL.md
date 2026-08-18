@@ -1,7 +1,7 @@
 ---
-name: design-deploy
+name: application-design-center-design-deploy
 description: >-
-  Processes GCP infrastructure design and deployment workflows.
+  Processes GCP infrastructure design and deployment workflows within Application Design Center (ADC).
   Use when:
   - Designing GCP infrastructure with Terraform.
   - Validating local HCL.
@@ -9,7 +9,9 @@ description: >-
   - Importing templates to Application Design Center (ADC).
   - Deploying templates.
   - Troubleshooting deployment failures.
-  Don't use for non-GCP cloud providers, or general Terraform coding outside the ADC context.
+  Boundaries:
+  - Only use for GCP-specific cloud infrastructure.
+  - Only use for Terraform coding within the ADC context.
 license: Apache-2.0
 metadata:
   version: v1
@@ -17,7 +19,7 @@ metadata:
   category: CloudInfrastructure
 ---
 
-# Custom Infrastructure Design and Deployment Skill
+# Designing and Deploying GCP Infrastructure with Application Design Center
 
 ## Overview
 
@@ -71,7 +73,7 @@ Before executing Phase 1, you **must** perform the following setup steps:
 validated, secure, and compile-ready Terraform configuration locally.
 
 1.  **Invoke the `design` Skill**: Call and execute the `design` skill (defined
-    in [design](references/design/SKILL.md))
+    in [design](references/design_guide.md))
     for the user's prompt.
     *   The `design` skill will autonomously perform the Codebase Analysis,
         query the catalog registry, planning, HCL generation, and local CLI
@@ -320,8 +322,8 @@ specialized troubleshooting skill and established cloud resolution patterns.
 
 2.  **Delegate to the Troubleshooting Skill**: If a deployment failure occurs
     and does not match the above patterns, invoke and execute the specialized
-    `infra-deployment-debugging` skill (located in
-    [infra-deployment-debugging](references/infra-deployment-debugging/SKILL.md)).
+    `infra-deployment-debugging` guide (located in
+    [infra-deployment-debugging](references/troubleshooting_guide.md)).
 
 3.  **Select the Troubleshooting Context**:
 

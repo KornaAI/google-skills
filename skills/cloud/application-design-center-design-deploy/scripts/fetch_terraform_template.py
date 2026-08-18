@@ -114,7 +114,16 @@ def _get_app_template_revision_source(
 ) -> str:
   """Describes the Catalog Template Revision to find the source.
 
-  Returns the applicationTemplateRevisionSource.
+  Args:
+    latest_revision_id: The latest revision ID or full resource name.
+    project: Target GCP project ID.
+    location: Target location ID.
+    space_id: Target Space ID.
+    catalog_id: Target Catalog ID.
+    short_template_id: Short template ID.
+
+  Returns:
+    The applicationTemplateRevisionSource.
   """
   # Step 3: Describe the Catalog Template Revision to find
   # applicationTemplateRevisionSource.
@@ -171,7 +180,11 @@ def _get_app_template_revision_source(
 def _generate_iac(app_template_revision_source: str) -> str:
   """Generates IaC for the Application Template Revision.
 
-  Returns the GCS URI.
+  Args:
+    app_template_revision_source: Source application template revision.
+
+  Returns:
+    The GCS URI.
   """
   # Step 4: Generate IaC for the Application Template Revision
   generate_cmd = [

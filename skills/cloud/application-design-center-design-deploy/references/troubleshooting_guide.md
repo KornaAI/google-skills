@@ -52,15 +52,11 @@ Evaluate the input provided by the user:
         `projects/P/locations/L/spaces/S/applications/A`) or references an App
         Design Center context.
     *   **Act**: Read and follow the detailed instructions in
-        [adc_application_troubleshooting.md](templates/adc_application_troubleshooting.md)
+        [adc_application_troubleshooting.md](adc_application_troubleshooting.md)
         to complete the troubleshooting task.
 -   **Case B: Raw Terraform Deployment**:
     *   **Indicator**: The input contains raw Terraform configuration code (HCL
         contents), `.tf` files, or direct Terraform plan/apply execution errors.
     *   **Act**: Read and follow the detailed instructions in
-        [raw_terraform_troubleshooting.md](templates/raw_terraform_troubleshooting.md)
+        [raw_terraform_troubleshooting.md](raw_terraform_troubleshooting.md)
         to complete the troubleshooting task.
-
-## Reporting Issues
-
-Report bugs or improvements for this skill at [Google Skills Issues](https://github.com/google/skills/issues).

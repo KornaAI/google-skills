@@ -36,15 +36,16 @@ Phase 2 to replan and regenerate.
 All generated configurations must prioritize the modular structure while
 adhering to naming and HCL style constraints. Refer to:
 
--   `../generator_instructions.md` for generation constraints and
+-   `generator_instructions.md` for generation constraints and
     project defaults.
--   `../terraform_validator_instructions.md` for semantic validation
+-   `terraform_validator_instructions.md` for semantic validation
     rules.
 
 General defaults & policies:
 
 -   **Default Network and Subnetwork:** Target the pre-existing VPC network and
-    subnetwork both named `"default"` in `<project_id>` unless otherwise specified.
+    subnetwork both named `"default"` in `<project_id>` unless otherwise
+    specified.
 -   **Secret-Safe Policy (MANDATORY):** NEVER write plaintext passwords, API
     keys, or credentials in HCL code or `terraform.tfvars`. All secrets must be
     declared as resources in GCP Secret Manager (using the
@@ -156,7 +157,7 @@ General defaults & policies:
     > 2.  **Construct the HCL `source` URI** using the pattern
     >     `github.com/<repo>//<dir>?ref=<refTag>`:
     >
-    >     ```hcl
+    >     ```terraform
     >     source = "github.com/GoogleCloudPlatform/terraform-google-cloud-run//modules/v2?ref=v0.33.0"
     >     ```
 
@@ -165,7 +166,7 @@ General defaults & policies:
 ## Phase 2: High-Level Architecture Planning
 
 1.  **Resource Initialization (MANDATORY):** Before formulating any plan, you
-    MUST read instructions from `../planner_instructions.md`. Do not
+    MUST read instructions from `planner_instructions.md`. Do not
     proceed until these instructions are in your active context.
 2.  **Design the High-Level Architecture:** Based on the modules identified in
     Phase 1, plan the design topology connecting the key modular building blocks
@@ -240,14 +241,14 @@ General defaults & policies:
     (the output directory will be created automatically if it does not exist).
 
 7.  **Review Planner Principles:** Crosscheck planning directives in
-    [planner_instructions.md](../planner_instructions.md).
+    `planner_instructions.md`.
 
 --------------------------------------------------------------------------------
 
 ## Phase 3: Module-Only Generator & CLI Validation Loop
 
 1.  **Resource Initialization (MANDATORY):** Before writing any HCL, you MUST
-    read instructions from `../generator_instructions.md`. Do not
+    read instructions from `generator_instructions.md`. Do not
     proceed until these instructions are in your active context.
 2.  **Generate Raw HCL:** Write standard Terraform code, prioritizing module
     blocks as much as possible, or using direct resources where no suitable
@@ -264,7 +265,7 @@ General defaults & policies:
     -   `outputs.tf`: Output declarations.
 4.  **Semantic Architecture Validation (MANDATORY):** Before running any CLI
     validation, you MUST read instructions from
-    `../terraform_validator_instructions.md`. Perform a comprehensive
+    `terraform_validator_instructions.md`. Perform a comprehensive
     semantic audit to ensure the configuration complies with the validator
     guidelines (preferring modules over resources, no custom variables, correct
     GitHub source formatting, etc.). Do not proceed until these instructions are
@@ -333,7 +334,3 @@ Your final modular code must be clean, robust, and securely wired.
 
     Ensure you output the complete and exact file contents for all final
     validated files.
-
-## Reporting Issues
-
-Report bugs or improvements for this skill at [Google Skills Issues](https://github.com/google/skills/issues).

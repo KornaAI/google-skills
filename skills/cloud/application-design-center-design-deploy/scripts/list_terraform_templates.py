@@ -66,18 +66,18 @@ def _process_templates(
     aggregated_results: list[dict[str, Any]],
 ) -> None:
   """Filters and appends structured templates to aggregated results."""
-  for temp in templates:
-    if not isinstance(temp, dict):
+  for template in templates:
+    if not isinstance(template, dict):
       continue
 
     # Filter for APPLICATION_TEMPLATE only
-    category = temp.get("templateCategory", "")
+    category = template.get("templateCategory", "")
     if category != "APPLICATION_TEMPLATE":
       continue
 
-    name = temp.get("name", "")
-    description = temp.get("description", "")
-    display_name = temp.get("displayName", "")
+    name = template.get("name", "")
+    description = template.get("description", "")
+    display_name = template.get("displayName", "")
 
     # Extract unique template ID suffix
     template_id = name.split("/")[-1] if "/" in name else name
