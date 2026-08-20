@@ -16,16 +16,11 @@ description: >-
   (BigQuery), or databases (Cloud SQL, Spanner, Bigtable, Firestore).
 license: Apache-2.0
 metadata:
-    version: v1
-    publisher: google
-    tags:
-      - gcs
-      - storage
-      - cloud-storage
-      - buckets
-      - objects
-    category: Storage
-    support_tier: primary
+  version: v1
+  publisher: google
+  tags: "gcs, storage, cloud-storage, buckets, objects"
+  category: Storage
+  support_tier: primary
 ---
 
 # Google Cloud Storage Basics

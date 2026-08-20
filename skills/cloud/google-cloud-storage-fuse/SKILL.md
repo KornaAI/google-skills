@@ -17,16 +17,11 @@ description: >-
   fully POSIX-compliant shared file systems (use Filestore or Managed Lustre).
 license: Apache-2.0
 metadata:
-    version: v1
-    publisher: google
-    tags:
-      - gcs
-      - gcsfuse
-      - fuse
-      - mount
-      - file-system
-    category: Storage
-    support_tier: primary
+  version: v1
+  publisher: google
+  tags: "gcs, gcsfuse, fuse, mount, file-system"
+  category: Storage
+  support_tier: primary
 ---
 
 # Google Cloud Storage FUSE
