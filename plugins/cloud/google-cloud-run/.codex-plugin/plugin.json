@@ -1,0 +1,11 @@
+{
+  "name": "google-cloud-run",
+  "version": "1.0.0",
+  "description": "Cloud Run guidance for coding agents: services, jobs, and worker pools.",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Google Cloud Run",
+    "shortDescription": "Deploy and configure Cloud Run services, jobs, and worker pools",
+    "category": "Productivity"
+  }
+}

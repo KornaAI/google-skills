@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "cloud-run": {
+      "serverUrl": "https://run.googleapis.com/mcp"
+    }
+  }
+}

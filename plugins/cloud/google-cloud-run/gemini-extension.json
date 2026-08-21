@@ -1,0 +1,11 @@
+{
+  "name": "google-cloud-run",
+  "version": "1.0.0",
+  "description": "Cloud Run guidance for coding agents: services, jobs, and worker pools.",
+  "mcpServers": {
+    "cloud-run": {
+      "httpUrl": "https://run.googleapis.com/mcp",
+      "authProviderType": "google_credentials"
+    }
+  }
+}
