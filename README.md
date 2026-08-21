@@ -155,6 +155,7 @@ repo to install.
 -   [**Firestore Skills**](https://github.com/firebase/agent-skills/tree/main/skills/firebase-firestore)
 -   [**Flutter Skills**](https://github.com/flutter/skills)
 -   [**Genkit Skills**](https://github.com/genkit-ai/skills)
+-   [**Google Maps Platform Skills**](https://github.com/googlemaps/agent-skills)
 
 ## Plugins
 
