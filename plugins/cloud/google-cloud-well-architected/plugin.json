@@ -1,0 +1,14 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "google-cloud-well-architected",
+  "version": "1.0.0",
+  "description": "Google Cloud Well-Architected Framework guidance for coding agents, covering all six pillars: cost optimization, operational excellence, performance optimization, reliability, security, and sustainability. Use when designing or reviewing a Google Cloud architecture.",
+  "author": {
+    "name": "Google LLC",
+    "url": "https://cloud.google.com"
+  },
+  "homepage": "https://github.com/google/skills/tree/main/plugins/cloud/google-cloud-well-architected",
+  "repository": "https://github.com/google/skills",
+  "license": "Apache-2.0",
+  "keywords": ["google-cloud", "well-architected", "architecture-review", "waf"]
+}
