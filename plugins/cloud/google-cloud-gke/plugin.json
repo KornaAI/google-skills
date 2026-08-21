@@ -1,0 +1,14 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "google-cloud-gke",
+  "version": "1.0.0",
+  "description": "Google Kubernetes Engine guidance for coding agents: cluster creation and upgrades, networking and storage, autoscaling and compute classes, workload and platform security, observability, cost analysis, batch and HPC workloads, AI inference on GPU and TPU, and troubleshooting. Includes the GKE MCP server for grounded access to the Kubernetes Engine API.",
+  "author": {
+    "name": "Google LLC",
+    "url": "https://cloud.google.com"
+  },
+  "homepage": "https://github.com/google/skills/tree/main/plugins/cloud/google-cloud-gke",
+  "repository": "https://github.com/google/skills",
+  "license": "Apache-2.0",
+  "keywords": ["google-cloud", "gke", "kubernetes", "containers"]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "google-cloud-gke",
+  "version": "1.0.0",
+  "description": "Google Kubernetes Engine guidance for coding agents: clusters, networking, scaling, security, observability, cost, and AI inference.",
+  "mcpServers": {
+    "gke": {
+      "httpUrl": "https://container.googleapis.com/mcp",
+      "authProviderType": "google_credentials"
+    }
+  }
+}
