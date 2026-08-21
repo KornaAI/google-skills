@@ -1,0 +1,11 @@
+{
+  "name": "gemini-api",
+  "version": "1.0.0",
+  "description": "Gemini API guidance for coding agents: generation, the Interactions API, and the Live API.",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Gemini API",
+    "shortDescription": "Build with the Gemini API, Interactions API, and Live API",
+    "category": "Productivity"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "gemini-api",
+  "version": "1.0.0",
+  "description": "Gemini API guidance for coding agents: generation, the Interactions API, and the Live API.",
+  "author": {
+    "name": "Google LLC"
+  }
+}
