@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "agent-registry": {
+      "serverUrl": "https://agentregistry.googleapis.com/mcp"
+    },
+    "cloud-run": {
+      "serverUrl": "https://run.googleapis.com/mcp"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "agent-registry": {
+      "type": "streamable-http",
+      "url": "https://agentregistry.googleapis.com/mcp"
+    },
+    "cloud-run": {
+      "type": "streamable-http",
+      "url": "https://run.googleapis.com/mcp"
+    }
+  }
+}

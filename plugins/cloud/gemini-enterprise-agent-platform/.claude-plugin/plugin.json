@@ -1,0 +1,8 @@
+{
+  "name": "gemini-enterprise-agent-platform",
+  "version": "1.0.0",
+  "description": "Gemini Enterprise Agent Platform guidance for coding agents: deploy, tune, evaluate, and operate agents and models.",
+  "author": {
+    "name": "Google LLC"
+  }
+}
