@@ -1,5 +1,5 @@
 ---
-name: gke-tpu-metrics-monitoring
+name: gke-ai-troubleshooting-tpu-metrics-monitoring
 description: >-
   Monitors and troubleshoots GKE TPU workloads, nodes, and node pools using GKE
   system metrics and PromQL. Use when monitoring TensorCore duty cycle, TPU memory,
@@ -30,13 +30,13 @@ Independently gather required context (such as cluster details or node pool name
 
 ### Step 1: Verify TPU Runtime Metrics Configuration [Low Risk] [Auto]
 
-Before analyzing runtime metrics, verify that the workload is configured to export them.
+Before analyzing runtime metrics, verify that the workload is configured to export them. This ensures the cluster and container environment are set up for automated metric scraping and visibility into accelerator health.
 
-- **Action**: Verify that the Pod specification for the TPU workload includes:
-  - `containerPort: 8431`
-  - JAX version `0.4.14` or later (if using JAX).
-  - GKE version is `1.27.4-gke.900` or later.
-  - GKE System Metrics are enabled on the cluster.
+- **Action**: Verify that the Pod specification and cluster meet the following prerequisites:
+  - `containerPort: 8431` exposed on the TPU container (required for Prometheus metric scraping).
+  - JAX version `0.4.14` or later if using JAX (earlier versions do not export runtime metrics).
+  - GKE version is `1.27.4-gke.900` or later (required for TPU runtime metric support).
+  - GKE System Metrics are enabled on the cluster (required for Cloud Monitoring ingestion).
 
 ### Step 2: Monitor TPU Runtime Metrics [Low Risk] [Auto]
 

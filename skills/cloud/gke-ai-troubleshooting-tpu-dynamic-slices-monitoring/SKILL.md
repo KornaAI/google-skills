@@ -1,5 +1,5 @@
 ---
-name: gke-tpu-dynamic-slices-monitoring
+name: gke-ai-troubleshooting-tpu-dynamic-slices-monitoring
 description: >-
   Monitors, troubleshoots, and manages GKE TPU Dynamic Slices custom resources. Use when checking TPU slice lifecycle states, troubleshooting slice provisioning failures, validating single-slice or multi-slice (JobSet) workload manifests, or safely patching stuck finalizers and disabling the slice controller. Don't use for generic GKE cluster node pool creation or standard non-TPU workload management (use gke-basics or gke-cluster-creation instead).
 metadata:
@@ -47,47 +47,16 @@ When asked to inspect, troubleshoot, or check a slice status, immediately execut
 Analyze the `Status.Conditions` (especially `Type: Ready` and its `Reason` and
 `Status`):
 
-| Lifecycle State / Reason  | Meaning                | Recommended Action      |
-| :------------------------ | :--------------------- | :---------------------- |
-| **`SliceNotCreated`**     | GKE Slice Controller   | Wait a few minutes and  |
-:                           : is initializing the    : re-check slice status.  :
-:                           : slice and performing   :                         :
-:                           : resource checks.       :                         :
-| **`SliceCreationFailed`** | Prerequisites          | Verify selected nodes   |
-:                           : validation failed      : exist, are unallocated, :
-:                           : (e.g., selected nodes  : and topology matches    :
-:                           : don't exist, nodes are : partition count.        :
-:                           : already used by        :                         :
-:                           : another slice, or the  :                         :
-:                           : topology doesn't match :                         :
-:                           : the number of          :                         :
-:                           : partitions).           :                         :
-| **`ACTIVATING`**          | GKE is actively        | Monitor node            |
-:                           : forming and            : provisioning.           :
-:                           : provisioning the TPU   :                         :
-:                           : slice.                 :                         :
-| **`ACTIVE`**              | The TPU slice is       | Proceed to deploy or    |
-:                           : successfully formed    : check workloads.        :
-:                           : and ready to host      :                         :
-:                           : workloads.             :                         :
-| **`ACTIVE_DEGRADED`**     | The slice is usable,   | Monitor workload logs   |
-:                           : but one or more        : for interconnect or     :
-:                           : sub-blocks are         : device errors. Check    :
-:                           : degraded.              : faulty node VMs.        :
-| **`FAILED`**              | GKE failed to form the | Ensure all selected     |
-:                           : TPU slice (e.g.,       : nodes belong to the     :
-:                           : selected nodes are not : same reservation block. :
-:                           : part of the same       :                         :
-:                           : reservation block).    :                         :
-| **`DEACTIVATING`**        | The slice is           | Wait for dismantling to |
-:                           : dismantling (triggered : finish, or patch        :
-:                           : by user deletion or a  : finalizers if stuck.    :
-:                           : critical systemic      :                         :
-:                           : failure).              :                         :
-| **`INCOMPLETE`**          | The terminal phase     | No action required; the |
-:                           : before the Slice CR is : resource will be        :
-:                           : deleted from the       : removed shortly.        :
-:                           : cluster.               :                         :
+| Lifecycle State / Reason | Meaning | Recommended Action |
+| :--- | :--- | :--- |
+| **`SliceNotCreated`** | GKE Slice Controller is initializing the slice and performing resource checks. | Wait a few minutes and re-check slice status. |
+| **`SliceCreationFailed`** | Prerequisites validation failed (e.g., selected nodes don't exist, nodes are already used by another slice, or the topology doesn't match the number of partitions). | Verify selected nodes exist, are unallocated, and topology matches partition count. |
+| **`ACTIVATING`** | GKE is actively forming and provisioning the TPU slice. | Monitor node provisioning. |
+| **`ACTIVE`** | The TPU slice is successfully formed and ready to host workloads. | Proceed to deploy or check workloads. |
+| **`ACTIVE_DEGRADED`** | The slice is usable, but one or more sub-blocks are degraded. | Monitor workload logs for interconnect or device errors. Check faulty node VMs. |
+| **`FAILED`** | GKE failed to form the TPU slice (e.g., selected nodes are not part of the same reservation block). | Ensure all selected nodes belong to the same reservation block. |
+| **`DEACTIVATING`** | The slice is dismantling (triggered by user deletion or a critical systemic failure). | Wait for dismantling to finish, or patch finalizers if stuck. |
+| **`INCOMPLETE`** | The terminal phase before the Slice CR is deleted from the cluster. | No action required; the resource will be removed shortly. |
 
 #### Provisioning Failure Troubleshooting Checklist
 
