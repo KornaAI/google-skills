@@ -1,11 +1,11 @@
 {
   "name": "google-cloud-gke",
-  "version": "1.0.0",
-  "description": "Google Kubernetes Engine guidance for coding agents: clusters, networking, scaling, security, observability, cost, and AI inference.",
+  "version": "1.1.0",
+  "description": "GKE cluster guidance for coding agents: creation, upgrades, networking, storage, backup, and observability. Workload concerns live in google-cloud-gke-workloads.",
   "skills": "./skills/",
   "interface": {
     "displayName": "Google Kubernetes Engine",
-    "shortDescription": "GKE clusters, workloads, scaling, and AI inference",
+    "shortDescription": "Cluster lifecycle, networking, storage, and observability on GKE",
     "category": "Productivity"
   }
 }

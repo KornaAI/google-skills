@@ -1,0 +1,11 @@
+{
+  "name": "google-cloud-gke-workloads",
+  "version": "1.0.0",
+  "description": "GKE workload guidance for coding agents: autoscaling, compute classes, cost, security, batch and HPC, and AI inference.",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Google Kubernetes Engine Workloads",
+    "shortDescription": "Autoscaling, cost, security, and AI workloads on GKE",
+    "category": "Productivity"
+  }
+}
