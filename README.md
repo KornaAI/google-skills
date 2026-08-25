@@ -60,6 +60,7 @@ repo to install.
 - **Infrastructure**
   - [**Designing and Deploying GCP Infrastructure with Application Design Center**](./skills/cloud/application-design-center-design-deploy)
   - [**GKE AI/ML Inference**](./skills/cloud/gke-inference)
+  - [**GKE Alert Configuration**](./skills/cloud/gke-alert-configuration)
   - [**GKE App Onboarding**](./skills/cloud/gke-app-onboarding)
   - [**GKE Backup & Disaster Recovery**](./skills/cloud/gke-backup-dr)
   - [**GKE Basics & Critical Gotchas**](./skills/cloud/gke-basics)
