@@ -50,6 +50,10 @@ repo to install.
   - [**Gemini API in Agent Platform**](./skills/cloud/gemini-api)
   - [**Gemini Enterprise Agent Platform - Managed Agents API Skill**](./skills/cloud/gemini-agents-api)
   - [**Gemini Interactions API Skill**](./skills/cloud/gemini-interactions-api)
+  - [**Genkit Dart**](./skills/cloud/genkit-dart)
+  - [**Genkit Go**](./skills/cloud/genkit-go)
+  - [**Genkit JS**](./skills/cloud/genkit-js)
+  - [**Genkit Python**](./skills/cloud/genkit-python)
   - [**LiveAPI Service Skill**](./skills/cloud/gemini-live-api)
   - [**Migrating from Gemini API in AI Studio to Agent Platform**](./skills/cloud/agent-platform-migrate-from-ai-studio)
   - [**Skill Registry**](./skills/cloud/agent-platform-skill-registry)
@@ -157,7 +161,6 @@ repo to install.
 -   [**Dart Skills**](https://github.com/dart-lang/skills)
 -   [**Firestore Skills**](https://github.com/firebase/agent-skills/tree/main/skills/firebase-firestore)
 -   [**Flutter Skills**](https://github.com/flutter/skills)
--   [**Genkit Skills**](https://github.com/genkit-ai/skills)
 -   [**Google Maps Platform Skills**](https://github.com/googlemaps/agent-skills)
 
 ## Plugins
