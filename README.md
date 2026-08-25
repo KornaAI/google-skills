@@ -68,6 +68,7 @@ repo to install.
   - [**GKE Cluster Autoscaler**](./skills/cloud/gke-cluster-autoscaler)
   - [**GKE Cluster Creation**](./skills/cloud/gke-cluster-creation)
   - [**GKE ComputeClasses**](./skills/cloud/gke-compute-classes)
+  - [**GKE Golden Base Image Discovery Expert**](./skills/cloud/gke-custom-golden-image-discovery)
   - [**GKE Golden Path Configuration**](./skills/cloud/gke-golden-path)
   - [**GKE JobSet Interruption Troubleshooting**](./skills/cloud/gke-ai-troubleshooting-jobset-interruption)
   - [**GKE Manifest Generation Skill**](./skills/cloud/gke-manifest-generation)
