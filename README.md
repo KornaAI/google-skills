@@ -26,6 +26,7 @@ repo to install.
   - [**Onboarding to Google Cloud**](./skills/cloud/google-cloud-recipe-onboarding)
 - **Multi-product solution skills**
   - [**Google Cloud solution-architecture workflow**](./skills/cloud/google-cloud-solution-architecture)
+  - [**Agent Gateway multi-agent security**](./skills/cloud/google-cloud-solution-multi-agent-security)
   - [**Agentic analytics across cloud providers and data types**](./skills/cloud/google-cloud-solution-agentic-analytics-spark-knowledge-catalog)
   - [**Borderless open data lakehouse agentic AI system**](./skills/cloud/google-cloud-solution-agentic-ai-borderless-data-lakehouse)
   - [**Build and deploy AI agents on Google Cloud**](./skills/cloud/google-cloud-solution-build-deploy-agents)
