@@ -213,6 +213,76 @@
         "authentication": "ON_INSTALL"
       },
       "category": "Data Warehousing & Data Lakes"
+    },
+    {
+      "name": "google-cloud-core",
+      "source": "./plugins/cloud/google-cloud-core",
+      "description": "Core Google Cloud guidance for coding agents: first-project onboarding, authentication and credential selection, and safety-critical validation for gcloud CLI commands. Includes the Google Developer Knowledge MCP server for grounded, up-to-date Google Cloud documentation.",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Cloud Platform"
+    },
+    {
+      "name": "google-cloud-well-architected",
+      "source": "./plugins/cloud/google-cloud-well-architected",
+      "description": "Google Cloud Well-Architected Framework guidance for coding agents, covering all six pillars: cost optimization, operational excellence, performance optimization, reliability, security, and sustainability. Use when designing or reviewing a Google Cloud architecture.",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Architecture & Best Practices"
+    },
+    {
+      "name": "google-cloud-gke",
+      "source": "./plugins/cloud/google-cloud-gke",
+      "description": "Google Kubernetes Engine cluster guidance for coding agents: cluster creation and upgrades, application onboarding, manifest generation, networking, storage, backup and disaster recovery, observability, and production readiness. For autoscaling, cost, security, and AI workloads see google-cloud-gke-workloads. Includes the GKE MCP server for grounded access to the Kubernetes Engine API.",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Containers & Kubernetes"
+    },
+    {
+      "name": "google-cloud-gke-workloads",
+      "source": "./plugins/cloud/google-cloud-gke-workloads",
+      "description": "Google Kubernetes Engine workload guidance for coding agents: autoscaling and compute classes, cost analysis and optimization, workload and platform security, multitenancy, batch and HPC, AI inference on GPU and TPU, and workload troubleshooting. Includes the GKE MCP server for grounded access to the Kubernetes Engine API.",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Containers & Kubernetes"
+    },
+    {
+      "name": "gemini-enterprise-agent-platform",
+      "source": "./plugins/cloud/gemini-enterprise-agent-platform",
+      "description": "Gemini Enterprise Agent Platform guidance for coding agents: deploying agents and models, inference, tuning and tuning management, the model and skill registries, RAG Engine, the evaluation flywheel, endpoint, prompt, and alert management, migration from AI Studio, troubleshooting, the Gemini Agents API, and the Google Agents CLI. Includes the Agent Registry and Cloud Run MCP servers.",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "AI & Machine Learning"
+    },
+    {
+      "name": "gemini-api",
+      "source": "./plugins/cloud/gemini-api",
+      "description": "Gemini API guidance for coding agents: generating text and multimodal output with the Google Gen AI SDK, the stateful Interactions API for multi-turn conversations and background execution, and the Live API for realtime bidirectional streaming. Includes the Google Developer Knowledge MCP server for grounded, up-to-date documentation.",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "AI & Machine Learning"
+    },
+    {
+      "name": "google-cloud-run",
+      "source": "./plugins/cloud/google-cloud-run",
+      "description": "Cloud Run guidance for coding agents: deploying and configuring services for HTTP traffic, jobs for event-triggered and scheduled work, and worker pools for pull-based background processing. Includes the Cloud Run MCP server for grounded access to the Cloud Run Admin API.",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Compute & Serverless"
     }
   ]
 }
