@@ -108,6 +108,7 @@ repo to install.
 - **Management tools**
   - [**Cloud Monitoring Chart Generation Skill (`cloud-monitoring-chart-generation`)**](./skills/cloud/cloud-monitoring-chart-generation)
   - [**Cloud Monitoring ListTimeSeries Request Generator**](./skills/cloud/cloud-monitoring-list-time-series-request)
+  - [**Cloud Monitoring PromQL Generator**](./skills/cloud/cloud-monitoring-promql-query)
   - [**Configuring Cloud Logging**](./skills/cloud/cloud-logging-configuration-basics)
   - [**Configuring Cross-Project Logging**](./skills/cloud/cloud-logging-cross-project-configuration)
   - [**Generate Logging Query Language queries**](./skills/cloud/cloud-logging-query-generation)
