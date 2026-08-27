@@ -1,7 +1,0 @@
-{
-  "mcpServers": {
-    "gke": {
-      "serverUrl": "https://container.googleapis.com/mcp"
-    }
-  }
-}

@@ -1,8 +1,0 @@
-{
-  "name": "google-cloud-run",
-  "version": "1.0.0",
-  "description": "Cloud Run guidance for coding agents: services, jobs, and worker pools.",
-  "author": {
-    "name": "Google LLC"
-  }
-}
