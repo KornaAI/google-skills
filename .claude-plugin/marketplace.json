@@ -157,11 +157,6 @@
       "name": "google-cloud-developer",
       "source": "./plugins/cloud/google-cloud-developer",
       "description": "Core Google Cloud guidance for coding agents: first-project onboarding, authentication and credential selection, and safety-critical validation for gcloud CLI commands. Includes the Google Developer Knowledge MCP server for grounded, up-to-date Google Cloud documentation."
-    },
-    {
-      "name": "gemini-api",
-      "source": "./plugins/cloud/gemini-api",
-      "description": "Gemini API guidance for coding agents: generating text and multimodal output with the Google Gen AI SDK, the stateful Interactions API for multi-turn conversations and background execution, and the Live API for realtime bidirectional streaming. Includes the Google Developer Knowledge MCP server for grounded, up-to-date documentation."
     }
   ]
 }
