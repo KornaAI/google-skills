@@ -96,6 +96,7 @@ repo to install.
   - [**Bigtable Basics**](./skills/cloud/bigtable-basics)
   - [**Cloud SQL Basics**](./skills/cloud/cloud-sql-basics)
   - [**Data Lineage Summary**](./skills/cloud/datalineage-summary)
+  - [**Dynamic Hybrid Search using AlloyDB**](./skills/cloud/google-cloud-solution-hybrid-search-alloydb)
   - [**GCP Managed Airflow DAG Authoring Guide**](./skills/cloud/managed-airflow-dag-authoring)
   - [**Google Cloud Database Onboarding Skill**](./skills/cloud/cloud-databases-onboarding)
   - [**Managed Service for Apache Airflow (formerly Cloud Composer) DAG troubleshooting guide**](./skills/cloud/managed-airflow-dag-troubleshooting)
