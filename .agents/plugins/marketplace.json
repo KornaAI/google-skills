@@ -215,6 +215,16 @@
       "category": "Data Warehousing & Data Lakes"
     },
     {
+      "name": "db-context-engineering",
+      "source": {
+        "source": "git-subdir",
+        "url": "GoogleCloudPlatform/db-context-enrichment",
+        "path": "plugin",
+        "ref": "v0.7.2"
+      },
+      "description": "Context Engineering Agent for generating and maintaining QueryData / Conversational Analytics API context sets (templates, facets, value searches) for natural language to SQL tasks. Works with AlloyDB, Cloud SQL for MySQL, Cloud SQL for PostgreSQL, and Spanner."
+    },
+    {
       "name": "google-cloud-developer",
       "source": "./plugins/cloud/google-cloud-developer",
       "description": "Core Google Cloud guidance for coding agents: first-project onboarding, authentication and credential selection, and safety-critical validation for gcloud CLI commands. Includes the Google Developer Knowledge MCP server for grounded, up-to-date Google Cloud documentation.",
