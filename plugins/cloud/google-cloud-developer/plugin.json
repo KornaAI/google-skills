@@ -7,7 +7,7 @@
     "name": "Google LLC",
     "url": "https://cloud.google.com"
   },
-  "homepage": "https://github.com/google/skills/tree/main/plugins/cloud/google-cloud-core",
+  "homepage": "https://github.com/google/skills/tree/main/plugins/cloud/google-cloud-developer",
   "repository": "https://github.com/google/skills",
   "license": "Apache-2.0",
   "keywords": ["google-cloud", "gcloud", "authentication", "onboarding"]
