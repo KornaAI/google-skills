@@ -77,6 +77,7 @@ repo to install.
   - [**GKE Manifest Generation Skill**](./skills/cloud/gke-manifest-generation)
   - [**GKE Multi-Tenancy**](./skills/cloud/gke-multitenancy)
   - [**GKE Networking**](./skills/cloud/gke-networking)
+  - [**GKE Node NotReady Troubleshooting Skill**](./skills/cloud/gke-node-notready)
   - [**GKE Productionize Skill**](./skills/cloud/gke-productionize)
   - [**GKE Reliability**](./skills/cloud/gke-reliability)
   - [**GKE Service Networking Skill**](./skills/cloud/gke-service-networking)
