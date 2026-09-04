@@ -135,6 +135,7 @@ repo to install.
   - [**Google Cloud Well-Architected Framework skill for the Security pillar**](./skills/cloud/google-cloud-waf-security)
   - [**Google Cloud Well-Architected Framework skill for the Sustainability pillar**](./skills/cloud/google-cloud-waf-sustainability)
 - **Security and identity**
+  - [**DPoP Adoption & Identity Security Architecture**](./skills/identity/dpop-adoption)
   - [**GKE Platform Security**](./skills/cloud/gke-platform-security)
   - [**GKE Workload Security**](./skills/cloud/gke-workload-security)
   - [**Google Cloud Security Command Center Query Skill**](./skills/cloud/google-cloud-scc-query)
