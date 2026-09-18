@@ -93,6 +93,35 @@ are mutually exclusive alternatives, not sequential steps.
         Pods needing regional PDs are scheduled onto a node pool that does
         **not** use optimized machine types.
 
+-   **Pods stay `Pending` / `FailedScheduling` after a node pool is moved to a
+    4th-generation (N4, N4A, N4D) machine series while the workload uses a
+    Persistent Disk StorageClass**: N4/N4A/N4D machines **do not support
+    Persistent Disk** (they support Hyperdisk only), so a PVC bound to a `pd-*`
+    StorageClass cannot bind or schedule on those nodes. Events typically show
+    `FailedScheduling` with a volume node-affinity / topology conflict.
+
+    -   Switch the workload to a **Hyperdisk** StorageClass (for example `type:
+        hyperdisk-balanced`) for the Gen4 node pool.
+    -   For existing Persistent Disk volumes, migrate the data to a Hyperdisk
+        volume; the original PD cannot be attached to a Gen4 node.
+    -   If the workload must keep Persistent Disk, keep it on a PD-capable
+        machine series (for example N2) via node selection. This is a
+        machine-type/disk-type incompatibility, **not** a capacity problem, so
+        increasing disk size or quota does not help.
+
+-   **Hyperdisk Pods become unschedulable when a compute class falls back across
+    VM generations (for example N4 priority, N2 fallback), or one StorageClass
+    must serve mixed generations**: a single static disk type in the
+    StorageClass is not compatible with every machine series in the fallback
+    list, so Pods cannot bind their volume on the fallback nodes.
+
+    -   Use **automated disk type selection**: set the StorageClass
+        `parameters.type` to `dynamic` with `hyperdisk-type`, `pd-type`, and
+        `disk-type-preference`, plus `use-allowed-disk-topology: "true"`, so GKE
+        selects a compatible disk type per node and schedules Pods only onto
+        nodes that support it. One dynamic StorageClass can then span multiple
+        VM generations (requires the GKE versions noted in the docs).
+
 -   **Mount stops responding due to the `fsGroup` setting**: A Pod configured
     with a `securityContext.fsGroup` on a volume that contains a **large number
     of files** makes the kubelet recursively change ownership on every file,
@@ -220,3 +249,6 @@ through the user's GitOps pipeline (for example, Config Sync, Argo CD, or Flux).
 -   [Configure ephemeral storage with local SSDs](https://docs.cloud.google.com/kubernetes-engine/docs/how-to/persistent-volumes/local-ssd.md.txt)
 -   [Cloud Storage FUSE CSI driver sidecar (enable Profiler)](https://docs.cloud.google.com/kubernetes-engine/docs/how-to/cloud-storage-fuse-csi-driver-sidecar.md.txt#enable-profiler)
 -   [Hyperdisk Storage Pools](https://docs.cloud.google.com/kubernetes-engine/docs/how-to/persistent-volumes/hyperdisk-storage-pools.md.txt)
+-   [N4 machine series storage support (Persistent Disk not supported)](https://docs.cloud.google.com/compute/docs/general-purpose-machines.md.txt)
+-   [Hyperdisk machine type support](https://docs.cloud.google.com/compute/docs/disks/hyperdisks.md.txt)
+-   [Hyperdisk automated disk type selection (dynamic StorageClass)](https://docs.cloud.google.com/kubernetes-engine/docs/concepts/hyperdisk.md.txt#automated_disk_type_selection)
