@@ -83,6 +83,7 @@ repo to install.
   - [**GKE TPU Dynamic Slices Monitoring & Management**](./skills/cloud/gke-ai-troubleshooting-tpu-dynamic-slices-monitoring)
   - [**GKE Upgrades & Maintenance**](./skills/cloud/gke-upgrades)
   - [**GKE Workload Scaling**](./skills/cloud/gke-workload-scaling)
+  - [**GKE Workload Scaling Troubleshooting Skill**](./skills/cloud/gke-workload-scaling-troubleshooting)
   - [**GKE Workload Troubleshooting Skill**](./skills/cloud/gke-workload-troubleshooting)
   - [**Google Cloud Filestore Auditing Skill**](./skills/cloud/google-cloud-filestore-auditing)
   - [**Google Cloud Filestore Autoscale**](./skills/cloud/google-cloud-filestore-autoscale)
